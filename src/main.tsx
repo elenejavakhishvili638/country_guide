@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { CountiresProvider } from './context/CountriesContext.tsx';
+import Airports from './pages/Airports.tsx';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "airports",
-        element: <div>popo</div>,
+        element: <Airports />,
       },
     ],
   }
