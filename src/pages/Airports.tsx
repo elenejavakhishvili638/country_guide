@@ -1,9 +1,22 @@
 import "./Airports.css"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AirportsContext } from "../context/AirportsContext"
+import { useParams } from "react-router"
 
 const Airports = () => {
-    const { airports, loading } = useContext(AirportsContext)
+    const { savedAirports, fetchAirports } = useContext(AirportsContext)
+    const { countryCode } = useParams()
+    useEffect(() => {
+        if (countryCode && !savedAirports[countryCode]) {
+            fetchAirports(countryCode);
+        }
+    }, [savedAirports, countryCode, fetchAirports])
+
+    if (!countryCode) {
+        return;
+    }
+
+    const airports = savedAirports[countryCode] || [];
 
     return (
         <div className="airports-container">
@@ -12,11 +25,11 @@ const Airports = () => {
                 <input type="text" placeholder="Search for airport" />
             </form>
             {
-                loading ? <p>loading</p> : (
+                !airports ? <p>There are no airports found 😟</p> : (
                     airports.map((airport) => {
                         if (airport.iata) {
                             return (
-                                <p key={airport.city}>{airport.iata} - {airport.name} ({airport.city})</p>
+                                <p key={airport.name}>{airport.iata} - {airport.name} ({airport.city})</p>
                             )
                         }
                     })

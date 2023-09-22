@@ -1,16 +1,17 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import { AirportInfo } from "../types/airport";
-import { useParams } from "react-router";
 import { CountriesContext } from "./CountriesContext";
 
 type AirportsContextType = {
-    airports: AirportInfo[];
+    savedAirports: { [key: string]: AirportInfo[] };
     loading: boolean;
+    fetchAirports: (countryCode: string) => Promise<void>
 };
 
 const AirportsContext = createContext<AirportsContextType>({
-    airports: [],
+    savedAirports: {},
     loading: false,
+    fetchAirports: async () => { },
 });
 
 interface AirportsProviderProps {
@@ -18,37 +19,33 @@ interface AirportsProviderProps {
 }
 
 const AirportsProvider = ({ children }: AirportsProviderProps) => {
-    const [airports, setAirports] = useState<AirportInfo[]>([]);
+    const [savedAirports, setSavedAirports] = useState<{ [key: string]: AirportInfo[] }>({});
     const [loading, setLoading] = useState<boolean>(false);
     const { countries } = useContext(CountriesContext)
-    const { countryCode } = useParams()
 
-
-    useEffect(() => {
+    const fetchAirports = async (countryCode: string) => {
+        setLoading(true);
         const foundCountry = countries.find((country) => country.cca3 === countryCode)
-        const fetchAirports = async () => {
-            setLoading(true);
-            try {
-                if (foundCountry) {
-                    const response = await fetch(`https://api.api-ninjas.com/v1/airports?country=${foundCountry?.cca2}&name=`, {
-                        headers: {
-                            'X-Api-Key': import.meta.env.VITE_AIRPORTS_API_KEY,
-                        }
-                    });
-                    const data = await response.json();
-                    setAirports(data);
-                    setLoading(false);
-                }
-            } catch (err) {
-                console.log(err)
+        try {
+            if (foundCountry) {
+                const response = await fetch(`https://api.api-ninjas.com/v1/airports?country=${foundCountry?.cca2}&name=`, {
+                    headers: {
+                        'X-Api-Key': import.meta.env.VITE_AIRPORTS_API_KEY,
+                    }
+                });
+                const data = await response.json();
+                setSavedAirports(prevAirports => ({ ...prevAirports, [countryCode]: data }));
+                setLoading(false);
             }
-        };
+        } catch (err) {
+            console.log(err)
+        }
+    };
 
-        fetchAirports();
-    }, [countries, countryCode])
+
     return (
         <AirportsContext.Provider
-            value={{ airports, loading }}
+            value={{ savedAirports, loading, fetchAirports }}
         >
             {children}
         </AirportsContext.Provider>

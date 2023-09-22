@@ -17,7 +17,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/:countryCode",
-    element: <App />,
+    element:
+      <AirportsProvider>
+        <App />
+      </AirportsProvider>,
     children: [
       {
         path: "",
@@ -25,9 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "airports",
-        element: <AirportsProvider>
-          <Airports />
-        </AirportsProvider>,
+        element: <Airports />
       },
     ],
   }
