@@ -2,6 +2,7 @@
   width: 100%;
   border: 1px solid rgb(204, 204, 204);
   padding: 16.5px 14px;
+  position: relative;
 }
 
 .dropdown-button {
@@ -18,7 +19,7 @@ ul {
   background-color: rgb(255, 255, 255);
   padding: 8px 8px;
   position: absolute;
-  top: 45%;
+  top: 100%;
   border: 1px solid #ccc;
   width: 100%;
   left: 0;

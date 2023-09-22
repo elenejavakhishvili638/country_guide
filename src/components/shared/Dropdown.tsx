@@ -1,37 +1,20 @@
 import React from 'react'
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai"
 import "./Dropdown.css"
+import { CountryInfo } from '../../types/country'
 
 type Props = {
     isOpen: boolean,
     selectedValue: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    handleOptionClick: (country: string) => void
+    handleOptionClick: (country: string) => void,
+    countries: CountryInfo[],
+    loading: boolean
 }
 
 const Dropdown = (props: Props) => {
-    const { selectedValue, setIsOpen, isOpen, handleOptionClick } = props
-    const countries = [
-        'USA',
-        'Canada',
-        'UK',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
-        'Australia',
+    const { selectedValue, setIsOpen, isOpen, handleOptionClick, countries, loading } = props
 
-    ];
     return (
         <div className='dropdown-container'>
             <div className='dropdown-button' onClick={() => setIsOpen(!isOpen)}>
@@ -41,15 +24,15 @@ const Dropdown = (props: Props) => {
                 {isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
             </div>
 
-            {isOpen && (
+            {isOpen && !loading && (
                 <ul>
                     {countries.map((country) => (
                         <li
-                            key={country}
-                            onClick={() => handleOptionClick(country)}
+                            key={country.cca3}
+                            onClick={() => handleOptionClick(country.name.common)}
 
                         >
-                            {country}
+                            {country.name.common}
                         </li>
                     ))}
                 </ul>

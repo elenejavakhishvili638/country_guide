@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { CountiresProvider } from './context/CountriesContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,23 @@ const router = createBrowserRouter([
   {
     path: "/:countryCode",
     element: <App />,
+    children: [
+      {
+        path: "",
+        element: <div>dd</div>,
+      },
+      {
+        path: "airports",
+        element: <div>popo</div>,
+      },
+    ],
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CountiresProvider>
+      <RouterProvider router={router} />
+    </CountiresProvider>
   </React.StrictMode>,
 )
