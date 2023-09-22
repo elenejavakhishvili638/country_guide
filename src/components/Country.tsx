@@ -31,11 +31,11 @@ const Country = () => {
                             <div className='country-info-first-section'>
                                 <div>
                                     <p>capital:</p>
-                                    {country.capital.map(cap => <span>{cap}</span>)}
+                                    {country.capital.map(cap => <span key={cap}>{cap}</span>)}
                                 </div>
                                 <div>
                                     <p>continent:</p>
-                                    {country.continents.map(cont => <span>{cont}</span>)}
+                                    {country.continents.map(cont => <span key={cont}>{cont}</span>)}
                                 </div>
                                 <div>
                                     <p>currency:</p>
