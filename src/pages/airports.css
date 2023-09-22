@@ -1,0 +1,48 @@
+.airports-container {
+  background-color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
+    rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.airports-container h4 {
+  font-weight: 400;
+  font-size: 2.125rem;
+  line-height: 1.235;
+  letter-spacing: 0.00735em;
+}
+
+form {
+  width: 100%;
+}
+
+input {
+  width: 195px;
+  outline: none;
+  padding: 4px 0px 5px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+input:hover {
+  border-bottom: 2px solid black;
+}
+
+input::placeholder {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(204, 204, 204);
+}
+
+.airports-container p {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
