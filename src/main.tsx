@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { CountiresProvider } from './context/CountriesContext.tsx';
 import Airports from './pages/Airports.tsx';
+import { AirportsProvider } from './context/AirportsContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/:countryCode",
-    element: <App />,
+    element: <AirportsProvider>
+      <App />
+    </AirportsProvider>,
     children: [
       {
         path: "",
