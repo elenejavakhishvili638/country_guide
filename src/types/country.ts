@@ -1,6 +1,7 @@
 export type CountryInfo = {
     altSpellings: string[];
     area: number;
+    borders?: string[];
     capital: string[];
     capitalInfo: {
         latlng: [number, number];
@@ -33,6 +34,7 @@ export type CountryInfo = {
     flags: {
         png: string;
         svg: string;
+        alt?: string;
     };
     idd: {
         root: string;
