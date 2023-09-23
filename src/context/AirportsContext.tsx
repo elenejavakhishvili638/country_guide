@@ -5,7 +5,7 @@ import { CountriesContext } from "./CountriesContext";
 type AirportsContextType = {
     savedAirports: { [key: string]: AirportInfo[] };
     loading: boolean;
-    fetchAirports: (countryCode: string) => Promise<void>
+    fetchAirports: (countryCode: string, name: string) => Promise<void>
 };
 
 const AirportsContext = createContext<AirportsContextType>({
@@ -23,12 +23,12 @@ const AirportsProvider = ({ children }: AirportsProviderProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const { countries } = useContext(CountriesContext)
 
-    const fetchAirports = async (countryCode: string) => {
+    const fetchAirports = async (countryCode: string, name?: string) => {
         setLoading(true);
         const foundCountry = countries.find((country) => country.cca3 === countryCode)
         try {
             if (foundCountry) {
-                const response = await fetch(`https://api.api-ninjas.com/v1/airports?country=${foundCountry?.cca2}&name=`, {
+                const response = await fetch(`https://api.api-ninjas.com/v1/airports?country=${foundCountry?.cca2}&name=${name}`, {
                     headers: {
                         'X-Api-Key': import.meta.env.VITE_AIRPORTS_API_KEY,
                     }

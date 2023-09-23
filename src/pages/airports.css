@@ -46,3 +46,34 @@ input::placeholder {
   line-height: 1.5;
   letter-spacing: 0.00938em;
 }
+
+.warning {
+  color: rgb(211, 47, 47);
+}
+
+.airports-column {
+  width: 100%;
+}
+
+.airports-column p {
+  margin-bottom: 16px;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .column-wrapper {
+    flex-direction: row;
+  }
+  .airports-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .airports-column {
+    width: 49%;
+  }
+}
