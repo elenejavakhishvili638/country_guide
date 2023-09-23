@@ -6,7 +6,6 @@ import { useParams } from 'react-router'
 
 type Props = {
     isOpen: boolean,
-    // selectedValue: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     handleOptionClick: (code: string) => void,
     countries: CountryInfo[],
@@ -32,7 +31,6 @@ const Dropdown = (props: Props) => {
                 </p>
                 {isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
             </div>
-
             {isOpen && !loading && (
                 <ul>
                     {countries.map((country) => (
@@ -45,8 +43,6 @@ const Dropdown = (props: Props) => {
                         </li>
                     ))}
                 </ul>
-
-
             )}
         </div>
     );
