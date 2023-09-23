@@ -10,6 +10,7 @@ import { CountiresProvider } from './context/CountriesContext.tsx';
 import Airports from './pages/Airports.tsx';
 import { AirportsProvider } from './context/AirportsContext.tsx';
 import Currency from './pages/Currency.tsx';
+import { CurrencyProvider } from './context/CurrencyContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,11 @@ const router = createBrowserRouter([
   {
     path: "/:countryCode",
     element:
-      <AirportsProvider>
-        <App />
-      </AirportsProvider>,
+      <CurrencyProvider>
+        <AirportsProvider>
+          <App />
+        </AirportsProvider>
+      </CurrencyProvider>,
     children: [
       {
         path: "",

@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { countries, loading } = useContext(CountriesContext)
+    const { countries } = useContext(CountriesContext)
     const navigate = useNavigate();
     const { countryCode } = useParams()
     const location = useLocation()
@@ -52,7 +52,7 @@ const Home = () => {
 
     return (
         <div className="home-container">
-            <Dropdown countries={countries} loading={loading} isOpen={isOpen} setIsOpen={setIsOpen} handleOptionClick={handleOptionClick} />
+            <Dropdown parentDivClassName="dropdown-container" childDivClassName="dropdown-button" isOpen={isOpen} setIsOpen={setIsOpen} handleOptionClick={handleOptionClick} />
             <div className="country-container">
                 {countryCode ? (
                     <Country />
@@ -61,6 +61,7 @@ const Home = () => {
             <div className="page-wrapper">
                 <NavLink
                     to={`/${countryCode}`}
+                    state={{ countries: "sss" }}
                     end={true}
                     className={({ isActive }) =>
                         isActive

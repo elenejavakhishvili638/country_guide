@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai"
 import "./Dropdown.css"
-import { CountryInfo } from '../../types/country'
 import { useParams } from 'react-router'
+import { useContext } from 'react'
+import { CountriesContext } from '../../context/CountriesContext'
 
 type Props = {
     isOpen: boolean,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     handleOptionClick: (code: string) => void,
-    countries: CountryInfo[],
-    loading: boolean
+    countryName?: string,
+    parentDivClassName: string,
+    childDivClassName: string
 }
 
 const Dropdown = (props: Props) => {
     const { countryCode } = useParams()
     const [value, setValue] = useState<string>()
+    const { countries, loading } = useContext(CountriesContext)
 
-    const { setIsOpen, isOpen, handleOptionClick, countries, loading } = props
+
+    const { setIsOpen, isOpen, handleOptionClick, countryName, parentDivClassName, childDivClassName } = props
 
     useEffect(() => {
         const foundCountry = countries.find((country) => country.cca3 === countryCode)
@@ -24,10 +28,10 @@ const Dropdown = (props: Props) => {
     }, [countries, countryCode])
 
     return (
-        <div className='dropdown-container'>
-            <div className='dropdown-button' onClick={() => setIsOpen(!isOpen)}>
+        <div className={parentDivClassName}>
+            <div className={childDivClassName} onClick={() => setIsOpen(!isOpen)}>
                 <p style={{ color: !value ? "rgb(204, 204, 204)" : "black" }}>
-                    {value ? value : "Choose the country"}
+                    {countryName ? countryName : value ? value : "Choose the country"}
                 </p>
                 {isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
             </div>
