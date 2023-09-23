@@ -79,7 +79,7 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
     const [exchangeCountry, setExchangeCountry] = useState<CountryInfo>()
     const { countries } = useContext(CountriesContext)
     const { countryCode } = useParams()
-    const [currency, setCurrency] = useState<Currency>()
+    const [savedCurrency, setSavedCurrency] = useState<{ [key: string]: Currency }>({})
     const [calculatedValue, setCalculatedValue] = useState<string>("0.00")
 
     const handleCountry = (code: string) => {
@@ -97,28 +97,29 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
         const country = countries.find((country) => country.cca3 === countryCode)
         const countryCurrency = country && Object.keys(country.currencies).map((currency) => currency)
 
-        if (!countryCurrency) {
+        if (!countryCurrency || savedCurrency[countryCurrency[0]]) {
             return
         }
+
         const fetchCountries = async () => {
             try {
                 const response = await fetch(`https://api.exchangerate.host/latest?base=${countryCurrency[0]}`);
                 const data = await response.json();
-                setCurrency(data);
+                setSavedCurrency(prevAirports => ({ ...prevAirports, [countryCurrency[0]]: data }));
             } catch (err) {
                 console.log(err)
             }
         };
 
         fetchCountries();
-    }, [countries, countryCode])
+    }, [countries, countryCode, savedCurrency])
 
     const calcualteExchange = (num: string) => {
         const countryCurrency = exchangeCountry && Object.keys(exchangeCountry.currencies).map((currency) => currency)
         if (!countryCurrency) return;
         const n = Number(num)
-        if (!currency) return;
-        const calc = (n * currency?.rates[countryCurrency[0]]).toFixed(2)
+        if (!savedCurrency) return;
+        const calc = (n * savedCurrency[countryCurrency[0]]?.rates[countryCurrency[0]]).toFixed(2)
         setCalculatedValue(calc)
     }
 

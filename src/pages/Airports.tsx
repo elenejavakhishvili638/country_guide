@@ -42,7 +42,7 @@ const Airports = () => {
             <form>
                 <input value={searchValue} onChange={handleChange} type="text" placeholder="Search for airport" />
             </form>
-            {loading ? (<p>loading</p>) :
+            {loading ? (<p>loading</p>) : filteredAirports.length === 0 ? <p style={{ color: "rgb(211, 47, 47)" }}>There are no airports found 😟</p> :
                 (
                     <div className="column-wrapper">
                         <div className="airports-column">
@@ -70,7 +70,6 @@ const Airports = () => {
                             })}
                         </div>
                     </div>
-
                 )
             }
         </div>

@@ -50,7 +50,7 @@ const Country = () => {
                                 <div>
                                     <p>population:</p>
                                     <span>
-                                        {country.population}
+                                        {(country.population).toLocaleString()}
                                     </span>
                                 </div>
                                 <div>

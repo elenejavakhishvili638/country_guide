@@ -29,13 +29,33 @@
   width: 100%;
 }
 
-.exchange-to input,
-.exchange-from input {
+.exchange-from {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+.exchange-from span {
+  margin-right: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.exchange-to .input,
+.exchange-from .input {
   width: 100%;
   outline: none;
   padding: 10px 0px 10px;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+.exchange-from:hover {
+  border-bottom: 2px solid black;
+}
+
+.exchange-to .input {
+  color: rgba(0, 0, 0, 0.54);
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
 }
 
 .currency-dropdown-container {
@@ -44,6 +64,11 @@
   border-bottom: 1px solid rgb(204, 204, 204);
   padding: 16.5px 14px;
   position: relative;
+}
+
+.currency-dropdown-container:hover {
+  border-bottom: 2px solid black;
+  padding-bottom: 15.5px;
 }
 
 .currency-dropdown-button {

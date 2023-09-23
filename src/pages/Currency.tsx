@@ -13,7 +13,7 @@ const Currency = () => {
     const { countryCode } = useParams()
     const [exchangeMoneySymbol, setExchangeMoneySymbol] = useState<string>("")
     const [value, setValue] = useState<string>("")
-    const [exchangeValue, setExchangeValue] = useState<string>("")
+    const [exchangeValue, setExchangeValue] = useState<string>("0")
 
     const handleOptionClick = (code: string) => {
         setIsOpen(false)
@@ -38,22 +38,25 @@ const Currency = () => {
         setExchangeValue(value)
         calcualteExchange(value)
     }
+
     useEffect(() => {
         calcualteExchange(exchangeValue)
     }, [calcualteExchange, exchangeValue])
-    // console.log(calculatedValue)
+
     return (
         <div className="currency-container">
             <h4>Currency Exchanage</h4>
             <Dropdown parentDivClassName="currency-dropdown-container" childDivClassName="currency-dropdown-button" countryName={value} isOpen={isOpen} setIsOpen={setIsOpen} handleOptionClick={handleOptionClick} />
             <div className="currency-exchange-container">
                 <div className="exchange-from">
-                    <input onChange={handleChange} value={exchangeValue} type="number" placeholder={currency && currency[0]} />
+                    <span>{currency && currency[0]}</span>
+                    <input className="input" onChange={handleChange} value={exchangeValue} type="number" />
                 </div>
                 <h4>=</h4>
                 <div className="exchange-to">
-                    {exchangeMoneySymbol ? exchangeMoneySymbol : currency && currency[0]} {calculatedValue}
-                    {/* <input type="number" defaultValue={calculatedValue} placeholder={exchangeMoneySymbol ? exchangeMoneySymbol : currency && currency[0]} /> */}
+                    <p className="input">
+                        {exchangeMoneySymbol ? exchangeMoneySymbol : currency && currency[0]} {calculatedValue}
+                    </p>
                 </div>
             </div>
         </div>
