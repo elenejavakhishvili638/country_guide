@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { CountriesContext } from '../context/CountriesContext'
 import { CountryInfo } from '../types/country'
 import "./Country.css"
+import Loading from './shared/Loading'
 
 const Country = () => {
     const { countries, loading } = useContext(CountriesContext)
@@ -22,8 +23,7 @@ const Country = () => {
 
     return (
         <>
-            {loading && <p>loading</p>}
-            {
+            {loading ? (<Loading />) : (
                 country && (
                     <div className='country-wrapper'>
                         <h4 className='country-name'>{country.name.official} <img src={country.flags.svg} alt={country.flags.alt ? country.flags.alt : country.name.common} /></h4>
@@ -69,7 +69,7 @@ const Country = () => {
                         </div>
                     </div>
                 )
-            }
+            )}
         </>
     )
 }

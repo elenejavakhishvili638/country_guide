@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { AirportsContext } from "../context/AirportsContext"
 import { useParams } from "react-router"
 import debounce from "lodash/debounce"
+import Loading from "../components/shared/Loading"
 
 const Airports = () => {
     const { savedAirports, loading, fetchAirports } = useContext(AirportsContext)
@@ -13,7 +14,7 @@ const Airports = () => {
         if (countryCode && !savedAirports[countryCode]) {
             fetchAirports(countryCode, "");
         }
-    }, [savedAirports, countryCode, fetchAirports, searchValue])
+    }, [countryCode, fetchAirports, savedAirports])
 
     const debouncedFetchAirports = debounce((countryCode: string, value: string) => fetchAirports(countryCode, value), 500)
 
@@ -42,7 +43,7 @@ const Airports = () => {
             <form>
                 <input value={searchValue} onChange={handleChange} type="text" placeholder="Search for airport" />
             </form>
-            {loading ? (<p>loading</p>) : filteredAirports.length === 0 ? <p style={{ color: "rgb(211, 47, 47)" }}>There are no airports found 😟</p> :
+            {loading ? (<Loading />) : filteredAirports.length === 0 ? <p style={{ color: "rgb(211, 47, 47)" }}>There are no airports found 😟</p> :
                 (
                     <div className="column-wrapper">
                         <div className="airports-column">

@@ -3,6 +3,7 @@
   border: 1px solid rgb(204, 204, 204);
   padding: 16.5px 14px;
   position: relative;
+  border-radius: 4px;
 }
 
 .dropdown-button {

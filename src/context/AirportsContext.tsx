@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 import { AirportInfo } from "../types/airport";
 import { CountriesContext } from "./CountriesContext";
 
@@ -23,7 +23,7 @@ const AirportsProvider = ({ children }: AirportsProviderProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const { countries } = useContext(CountriesContext)
 
-    const fetchAirports = async (countryCode: string, name?: string) => {
+    const fetchAirports = useCallback(async (countryCode: string, name?: string) => {
         setLoading(true);
         const foundCountry = countries.find((country) => country.cca3 === countryCode)
         try {
@@ -40,7 +40,7 @@ const AirportsProvider = ({ children }: AirportsProviderProps) => {
         } catch (err) {
             console.log(err)
         }
-    };
+    }, [countries]);
 
 
     return (

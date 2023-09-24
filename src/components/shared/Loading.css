@@ -1,0 +1,15 @@
+.loading-column-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .column-wrapper {
+    flex-direction: row;
+  }
+
+  .loading-column {
+    width: 49%;
+  }
+}

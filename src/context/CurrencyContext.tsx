@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, useCallback } from "react";
 import { Currency } from "../types/currency";
 import { CountriesContext } from "./CountriesContext";
 import { CountryInfo } from "../types/country";
@@ -82,19 +82,25 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
     const [savedCurrency, setSavedCurrency] = useState<{ [key: string]: Currency }>({})
     const [calculatedValue, setCalculatedValue] = useState<string>("0.00")
 
+    const findCountryByCode = useCallback((code: string) => {
+        return countries.find(country => country.cca3 === code);
+    }, [countries]);
+
     const handleCountry = (code: string) => {
-        const country = countries.find((country) => country.cca3 === code)
+        const country = findCountryByCode(code);
         if (country) {
             setExchangeCountry(country)
         }
     }
     useEffect(() => {
-        const country = countries.find((country) => country.cca3 === countryCode)
+        if (!countryCode) return
+        const country = findCountryByCode(countryCode);
         setExchangeCountry(country)
-    }, [countries, countryCode])
+    }, [countries, countryCode, findCountryByCode])
 
     useEffect(() => {
-        const country = countries.find((country) => country.cca3 === countryCode)
+        if (!countryCode) return
+        const country = findCountryByCode(countryCode);
         const countryCurrency = country && Object.keys(country.currencies).map((currency) => currency)
 
         if (!countryCurrency || savedCurrency[countryCurrency[0]]) {
@@ -112,14 +118,16 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
         };
 
         fetchCountries();
-    }, [countries, countryCode, savedCurrency])
+    }, [countries, countryCode, findCountryByCode, savedCurrency])
 
     const calcualteExchange = (num: string) => {
-        const countryCurrency = exchangeCountry && Object.keys(exchangeCountry.currencies).map((currency) => currency)
-        if (!countryCurrency) return;
+        const exchangeCountryCountryCurrency = exchangeCountry && Object.keys(exchangeCountry.currencies).map((currency) => currency)
+        if (!countryCode) return
+        const country = findCountryByCode(countryCode);
+        const countryCurrency = country && Object.keys(country.currencies).map((currency) => currency)
+        if (!exchangeCountryCountryCurrency || !savedCurrency || !countryCurrency) return;
         const n = Number(num)
-        if (!savedCurrency) return;
-        const calc = (n * savedCurrency[countryCurrency[0]]?.rates[countryCurrency[0]]).toFixed(2)
+        const calc = (n * savedCurrency[countryCurrency[0]]?.rates[exchangeCountryCountryCurrency[0]]).toFixed(2)
         setCalculatedValue(calc)
     }
 

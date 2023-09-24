@@ -1,10 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import Dropdown from "./shared/Dropdown";
 import "./Home.css"
-import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { CountriesContext } from "../context/CountriesContext";
 import Country from "./Country"
 import { Outlet } from "react-router-dom";
+import Button from "./shared/Button";
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -48,8 +49,6 @@ const Home = () => {
         });
     }, [countries, location.pathname, navigate])
 
-
-
     return (
         <div className="home-container">
             <Dropdown parentDivClassName="dropdown-container" childDivClassName="dropdown-button" isOpen={isOpen} setIsOpen={setIsOpen} handleOptionClick={handleOptionClick} />
@@ -59,28 +58,7 @@ const Home = () => {
                 ) : null}
             </div>
             <div className="page-wrapper">
-                <NavLink
-                    to={`/${countryCode}`}
-                    state={{ countries: "sss" }}
-                    end={true}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "link active-link"
-                            : "link"
-                    }
-                >
-                    currency exchange
-                </NavLink>
-                <NavLink
-                    to={`/${countryCode}/airports`}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "link active-link"
-                            : "link"
-                    }
-                >
-                    airports
-                </NavLink>
+                <Button countryCode={countryCode} />
             </div>
             <Outlet />
         </div>
