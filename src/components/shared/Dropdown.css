@@ -24,6 +24,7 @@ ul {
   border: 1px solid #ccc;
   width: 100%;
   left: 0;
+  z-index: 10;
 }
 
 li {

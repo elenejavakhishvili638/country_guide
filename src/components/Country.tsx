@@ -34,10 +34,6 @@ const Country = () => {
                                     {country.capital.map(cap => <span key={cap}>{cap}</span>)}
                                 </div>
                                 <div>
-                                    <p>continent:</p>
-                                    {country.continents.map(cont => <span key={cont}>{cont}</span>)}
-                                </div>
-                                <div>
                                     <p>currency:</p>
                                     {Object.values(country.currencies).map((currency, index) => (
                                         <span key={index}>
@@ -45,18 +41,22 @@ const Country = () => {
                                         </span>
                                     ))}
                                 </div>
+                                <div>
+                                    <p>region:</p>
+                                    <span>
+                                        {country.region}, {country.subregion}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p>continent:</p>
+                                    {country.continents.map(cont => <span key={cont}>{cont}</span>)}
+                                </div>
                             </div>
                             <div className='country-info-second-section'>
                                 <div>
                                     <p>population:</p>
                                     <span>
                                         {(country.population).toLocaleString()}
-                                    </span>
-                                </div>
-                                <div>
-                                    <p>region:</p>
-                                    <span>
-                                        {country.region}, {country.subregion}
                                     </span>
                                 </div>
                                 <div className='borders'>
