@@ -99,7 +99,7 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
     }, [countries, countryCode, exchangeCountry, findCountryByCode])
 
     useEffect(() => {
-        if (!countryCode) return
+        if (!countryCode || location.pathname.includes('airports')) return
         const country = findCountryByCode(countryCode);
         const countryCurrency = country && Object.keys(country.currencies).map((currency) => currency)
 
@@ -107,7 +107,7 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
             return
         }
 
-        const fetchCountries = async () => {
+        const fetchCurrencies = async () => {
             try {
                 const response = await fetch(`https://api.exchangerate.host/latest?base=${countryCurrency[0]}`);
                 const data = await response.json();
@@ -117,7 +117,7 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
             }
         };
 
-        fetchCountries();
+        fetchCurrencies();
     }, [countries, countryCode, findCountryByCode, savedCurrency])
 
     const calcualteExchange = (num: string) => {
