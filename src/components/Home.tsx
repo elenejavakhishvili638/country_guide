@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import Dropdown from "./shared/Dropdown";
 import "./Home.css"
 import { useNavigate, useParams, useLocation } from "react-router-dom";
@@ -13,11 +13,16 @@ const Home = () => {
     const navigate = useNavigate();
     const { countryCode } = useParams()
     const location = useLocation()
+    const countriesRef = useRef(countries)
 
     const handleOptionClick = (code: string) => {
         navigate(`/${code}`);
         setIsOpen(false);
     };
+
+    useEffect(() => {
+        countriesRef.current = countries;
+    }, [countries]);
 
     useEffect(() => {
         if (location.pathname !== '/') {
@@ -36,7 +41,7 @@ const Home = () => {
                         const result = data.results[0];
                         const countryComponent = result.address_components.find((component: { types: string | string[]; }) => component.types.includes('country'));
                         if (countryComponent) {
-                            const foundCountry = countries.find((country) => country.name.common === countryComponent.long_name)
+                            const foundCountry = countriesRef.current.find((country) => country.name.common === countryComponent.long_name)
                             if (foundCountry) {
                                 navigate(`/${foundCountry?.cca3}`);
                             }
@@ -47,7 +52,7 @@ const Home = () => {
         }, (error) => {
             console.error(error);
         });
-    }, [countries, location.pathname, navigate])
+    }, [location.pathname, navigate])
 
     return (
         <div className="home-container">
