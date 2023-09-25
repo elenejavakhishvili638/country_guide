@@ -93,10 +93,10 @@ const CurrencyProvider = ({ children }: CurrencyProviderProps) => {
         }
     }
     useEffect(() => {
-        if (!countryCode) return
+        if (!countryCode || exchangeCountry) return
         const country = findCountryByCode(countryCode);
         setExchangeCountry(country)
-    }, [countries, countryCode, findCountryByCode])
+    }, [countries, countryCode, exchangeCountry, findCountryByCode])
 
     useEffect(() => {
         if (!countryCode) return
